@@ -15,6 +15,38 @@
       },
       "oauth_client": [
         {
+          "client_id": "640171861452-rl4ahujnn1p81299idqlbmh4nf4sefk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firechat",
+            "certificate_hash": "77a2a017c326573d24d62ccaaca25757b06eafd4"
+          }
+        },
+        {
+          "client_id": "640171861452-51epojdqugtbsckinabjvmifbm8f560p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firechat",
+            "certificate_hash": "983ec64f4468b301ddd4fa50a4893df01f755172"
+          }
+        },
+        {
+          "client_id": "640171861452-a0ucim5uetu4ulien71ijtb9anlnqiae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firechat",
+            "certificate_hash": "61148ccc06513edd9bde1d00823677be31a43159"
+          }
+        },
+        {
+          "client_id": "640171861452-1b9da7cdm8o217s9auk0fh3oudmdbju3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firechat",
+            "certificate_hash": "c49932d84ddcaf0792b4328e8f6a5b1279595ef4"
+          }
+        },
+        {
           "client_id": "640171861452-iccctkqdja7tm6uj9hfagji5i7aukuqk.apps.googleusercontent.com",
           "client_type": 3
         }
