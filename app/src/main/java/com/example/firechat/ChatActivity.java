@@ -13,21 +13,13 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
@@ -62,10 +54,10 @@ public class ChatActivity extends AppCompatActivity {
                     Toasty.warning(ChatActivity.this, "Please enter some texts!", Toast.LENGTH_SHORT).show();
                 } else {
                     FirebaseDatabase.getInstance()
-                            .getReference()
+                            .getReference().child(room_name)
                             .push()
                             .setValue(new ChatMessage(input.getText().toString(),
-                                    FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                                    nameFromEmail,
                                     FirebaseAuth.getInstance().getCurrentUser().getUid())
                             );
                     input.setText("");
@@ -172,7 +164,7 @@ public class ChatActivity extends AppCompatActivity {
         Log.d("Main", "user id: " + loggedInUserName);
         System.out.println("Main"+ "user id: " + loggedInUserName+"  --------------------");
 
-        messageAdapter = new MessageAdapter(this, ChatMessage.class, R.layout.item_in_message,
+        messageAdapter = new MessageAdapter(this, ChatMessage.class, R.layout.their_message,
                 FirebaseDatabase.getInstance().getReference().child(room_name));
         listView.setAdapter(messageAdapter);
     }

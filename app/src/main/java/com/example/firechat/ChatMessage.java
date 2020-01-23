@@ -6,12 +6,13 @@ public class ChatMessage {
     private String email;
     private String msg;
     private String messageUserId;
+    private long messageTime;
 
 
-    public ChatMessage(String msg, String messageUser, String messageUserId) {
+    public ChatMessage(String msg, String email, String messageUserId) {
         this.email = email;
-        this.msg = messageUser;
-
+        this.msg = msg;
+        messageTime = new Date().getTime();
         this.messageUserId = messageUserId;
     }
 
@@ -43,15 +44,14 @@ public class ChatMessage {
         this.msg = msg;
     }
 
-    public String getMessageUser() {
-        return email;
+
+    public long getMessageTime() {
+        return messageTime;
     }
 
-    public void setMessageUser(String messageUser) {
-        this.email = messageUser;
+    public void setMessageTime(long messageTime) {
+        this.messageTime = messageTime;
     }
-
-
 
     @Override
     public String toString() {
