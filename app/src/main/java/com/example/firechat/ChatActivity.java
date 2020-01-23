@@ -5,14 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -25,94 +29,113 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
+
 public class ChatActivity extends AppCompatActivity {
 
-    private Button btn_send_msg;
-    private EditText input_msg;
-    private TextView chat_conversation;
-
+    private FloatingActionButton fab;
+    private EditText input;
+    private MessageAdapter  messageAdapter;
     private String nameFromEmail, room_name;
     private DatabaseReference root;
     private String temp_key;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
-        btn_send_msg = (Button) findViewById(R.id.btn_send);
-        input_msg = (EditText) findViewById(R.id.msg_input);
-        chat_conversation = (TextView) findViewById(R.id.textView);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         nameFromEmail = user.getEmail().split("@")[0];
         room_name = getIntent().getExtras().get("room_name").toString();
         setTitle(" Room - " + room_name);
 
+        fab = findViewById(R.id.fab);
+        input = findViewById(R.id.input);
+        listView = findViewById(R.id.list_chat);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
-
-        btn_send_msg.setOnClickListener(new View.OnClickListener() {
+        showAllOldMessages();
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Map<String, Object> map = new HashMap<String, Object>();
-                temp_key = root.push().getKey();
-                root.updateChildren(map);
-
-                DatabaseReference message_root = root.child(temp_key);
-                Map<String, Object> map2 = new HashMap<String, Object>();
-                map2.put("email", nameFromEmail);
-                map2.put("msg", input_msg.getText().toString());
-
-                message_root.updateChildren(map2);
+                if (input.getText().toString().trim().equals("")) {
+                    Toasty.warning(ChatActivity.this, "Please enter some texts!", Toast.LENGTH_SHORT).show();
+                } else {
+                    FirebaseDatabase.getInstance()
+                            .getReference()
+                            .push()
+                            .setValue(new ChatMessage(input.getText().toString(),
+                                    FirebaseAuth.getInstance().getCurrentUser().getEmail(),
+                                    FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            );
+                    input.setText("");
+                }
             }
         });
 
-        root.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//        btn_send_msg.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Map<String, Object> map = new HashMap<String, Object>();
+//                temp_key = root.push().getKey();
+//                root.updateChildren(map);
+//
+//                DatabaseReference message_root = root.child(temp_key);
+//                Map<String, Object> map2 = new HashMap<String, Object>();
+//                map2.put("email", nameFromEmail);
+//                map2.put("msg", input_msg.getText().toString());
+//
+//                message_root.updateChildren(map2);
+//            }
+//        });
 
-                append_chat_conversation(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                append_chat_conversation(dataSnapshot);
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        root.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//
+//                append_chat_conversation(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//                append_chat_conversation(dataSnapshot);
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
     }
 
     private String chat_msg, chat_user_name;
 
-    private void append_chat_conversation(DataSnapshot dataSnapshot) {
-
-        Iterator i = dataSnapshot.getChildren().iterator();
-
-        while (i.hasNext()) {
-            chat_user_name = (String) ((DataSnapshot) i.next()).getValue();
-            chat_msg = (String) ((DataSnapshot) i.next()).getValue();
-            chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
-        }
-
-
-    }
+//    private void append_chat_conversation(DataSnapshot dataSnapshot) {
+//
+//        Iterator i = dataSnapshot.getChildren().iterator();
+//
+//        while (i.hasNext()) {
+//            chat_user_name = (String) ((DataSnapshot) i.next()).getValue();
+//            chat_msg = (String) ((DataSnapshot) i.next()).getValue();
+//            chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
+//        }
+//
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,5 +163,21 @@ public class ChatActivity extends AppCompatActivity {
             startActivity(intent);
         });
         finish();
+    }
+
+
+    private String loggedInUserName = "";
+    private void showAllOldMessages() {
+        loggedInUserName = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d("Main", "user id: " + loggedInUserName);
+        System.out.println("Main"+ "user id: " + loggedInUserName+"  --------------------");
+
+        messageAdapter = new MessageAdapter(this, ChatMessage.class, R.layout.item_in_message,
+                FirebaseDatabase.getInstance().getReference().child(room_name));
+        listView.setAdapter(messageAdapter);
+    }
+
+    public String getLoggedInUserName() {
+        return loggedInUserName;
     }
 }
