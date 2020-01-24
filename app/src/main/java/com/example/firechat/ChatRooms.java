@@ -13,6 +13,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
 
     private Button add_room;
     private EditText room_name;
+    private ListView listView;
+    private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_rooms = new ArrayList<>();
     private String email;
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
@@ -60,6 +64,16 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
 
         add_room = (Button) findViewById(R.id.btn_add_room);
         room_name = (EditText) findViewById(R.id.room_name_edittext);
+        room_name.setScroller(new Scroller(this));
+        room_name.setMaxLines(5);
+        room_name.setVerticalScrollBarEnabled(true);
+        room_name.setMovementMethod(new ScrollingMovementMethod());
+//        listView = (ListView) findViewById(R.id.listView);
+//
+//        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list_of_rooms);
+//
+//        listView.setAdapter(arrayAdapter);
+        // set up the RecyclerView
         RecyclerView recyclerView = findViewById(R.id.rv_rooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         roomAdapter = new RoomAdapter(this, list_of_rooms);
@@ -106,6 +120,17 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
 
             }
         });
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
+//                intent.putExtra("room_name",((TextView)view).getText().toString() );
+//
+//                startActivity(intent);
+//            }
+//        });
     }
 
     @Override
