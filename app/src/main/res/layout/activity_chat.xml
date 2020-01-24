@@ -16,24 +16,32 @@
         android:tint="@android:color/white"
         app:fabSize="mini" />
 
-    <com.google.android.material.textfield.TextInputLayout
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_toLeftOf="@id/fab">-->
+    <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/fab">
+        android:layout_alignParentBottom="true">
 
         <EditText
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Input" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <ListView
         android:id="@+id/list_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/fab"
+        android:layout_above="@id/layout"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="16dp"
         android:divider="@android:color/transparent"
