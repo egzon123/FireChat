@@ -16,15 +16,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
-    public RoomAdapter(Context context,List<String> data){
+    public RoomAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View room_item = mInflater.inflate(R.layout.item_room,parent,false);
+        View room_item = mInflater.inflate(R.layout.item_room, parent, false);
 
         return new ViewHolder(room_item);
     }
@@ -40,8 +41,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         return mData.size();
     }
 
-    public class ViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView room_name,room_last_time,room_last_msg;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView room_name, room_last_time, room_last_msg;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -57,14 +59,17 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
         }
 
     }
+
     // convenience method for getting data at click position
     String getItem(int id) {
         return mData.get(id);
     }
+
     // allows clicks events to be caught
     void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
+
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
         void onItemClick(View view, int position);

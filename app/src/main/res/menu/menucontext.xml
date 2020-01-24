@@ -6,4 +6,7 @@
     <item android:id="@+id/sign_out"
         android:title="Sign Out"
     />
+    <item android:id="@+id/upload_profile_img"
+        android:title="Upload Profile Image"
+        />
 </menu>

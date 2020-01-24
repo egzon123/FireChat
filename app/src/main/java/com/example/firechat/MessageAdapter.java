@@ -8,11 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-import com.bumptech.glide.Glide;
 
 import com.firebase.ui.database.FirebaseListAdapter;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,15 +20,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
+public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
     private ChatActivity chatActivity;
-
-
+    StorageReference storageReference;
 
     public MessageAdapter(ChatActivity activity, Class<ChatMessage> modelClass, int modelLayout, Query ref) {
         super(activity, modelClass, modelLayout, ref);
         this.chatActivity = activity;
-
+        storageReference = FirebaseStorage.getInstance().getReference().child("profile_images");
     }
 
 
@@ -37,15 +35,15 @@ public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
     protected void populateView(@NonNull View v, @NonNull ChatMessage model, int position) {
         TextView messageUser = (TextView) v.findViewById(R.id.message_user);
         TextView messageText = (TextView) v.findViewById(R.id.message_text);
-       ImageView  imgProfile = (ImageView) v.findViewById(R.id.avatar);
+        ImageView imgProfile = (ImageView) v.findViewById(R.id.avatar);
         TextView messageTime = (TextView) v.findViewById(R.id.message_time);
-        System.out.println("====>> Inside populateView "+model.getMsg()+" === "+model.getEmail());
+        System.out.println("====>> Inside populateView " + model.getMsg() + " === " + model.getEmail());
 
         messageUser.setText(model.getEmail());
         messageText.setText(model.getMsg());
-        StorageReference storageReference= FirebaseStorage.getInstance().getReference().child("profile_images");
 
-        storageReference.child("VWyX5bCiF1cRBXXxDc6FlEl37Vg2.jpg")
+
+        storageReference.child(model.getMessageUserId())
                 .getDownloadUrl()
                 .addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -53,11 +51,11 @@ public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
                         Picasso.get().load(uri).into(imgProfile);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
-                    }
-                });
+            }
+        });
 //        Glide.with(MyApplication.getInstance())
 //                .load(storageReference.child(model.getMessageUserId()))
 //                .into(imgProfile);
@@ -71,7 +69,7 @@ public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ChatMessage chatMessage = getItem(position);
-        System.out.println(chatMessage+" ------>>>>>>>");
+        System.out.println(chatMessage + " ------>>>>>>>");
         if (chatMessage.getMessageUserId().equals(chatActivity.getLoggedInUserName()))
             view = chatActivity.getLayoutInflater().inflate(R.layout.my_message, viewGroup, false);
 

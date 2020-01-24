@@ -28,11 +28,11 @@ import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final int GOOGLE_SIGN =123;
+    static final int GOOGLE_SIGN = 123;
     FirebaseAuth firebaseAuth;
     Button btn_login;
     TextView textView;
-   static GoogleSignInClient signInClient;
+    static GoogleSignInClient signInClient;
     ProgressBar progressBar;
     ImageView imageView;
 
@@ -52,30 +52,30 @@ public class LoginActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
 
-        signInClient = GoogleSignIn.getClient(this,googleSignInOptions);
-        btn_login.setOnClickListener(v ->signInGoogle());
+        signInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+        btn_login.setOnClickListener(v -> signInGoogle());
     }
 
-    void signInGoogle(){
+    void signInGoogle() {
         progressBar.setVisibility(View.VISIBLE);
         Intent signIntent = signInClient.getSignInIntent();
-        startActivityForResult(signIntent,GOOGLE_SIGN);
+        startActivityForResult(signIntent, GOOGLE_SIGN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == GOOGLE_SIGN){
+        if (requestCode == GOOGLE_SIGN) {
             Task<GoogleSignInAccount> task = GoogleSignIn
-                        .getSignedInAccountFromIntent(data);
+                    .getSignedInAccountFromIntent(data);
 
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
 
-                if(account != null){
+                if (account != null) {
                     firebaseAuthWithGoogle(account);
                 }
-            }catch (ApiException e){
+            } catch (ApiException e) {
                 e.printStackTrace();
             }
         }
@@ -83,35 +83,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount account){
-        Log.d("TAG","firsebaseAuthWithGoogle:"+ account.getId());
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        Log.d("TAG", "firsebaseAuthWithGoogle:" + account.getId());
 
         AuthCredential authCredential = GoogleAuthProvider
-                .getCredential(account.getIdToken(),null);
+                .getCredential(account.getIdToken(), null);
 
         firebaseAuth.signInWithCredential(authCredential)
-                .addOnCompleteListener(this, task->{
-                    if(task.isSuccessful()){
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
                         progressBar.setVisibility(View.INVISIBLE);
-                        Log.d("TAG","Signin success");
+                        Log.d("TAG", "Signin success");
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                        Intent intent = new Intent(this,ChatRooms.class);
-                        intent.putExtra("email",user.getEmail());
+                        Intent intent = new Intent(this, ChatRooms.class);
+                        intent.putExtra("email", user.getEmail());
 
                         startActivity(intent);
 //                        System.out.println("---- FirebaseUser displayName ---->> :"+user.getDisplayName());
 //                        updateUI(user,account.getDisplayName());
-                    }else{
+                    } else {
                         progressBar.setVisibility(View.INVISIBLE);
-                        Log.w("TAG","Sigin failure",task.getException());
+                        Log.w("TAG", "Sigin failure", task.getException());
                         Toast.makeText(this, "SignIn Failed!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
-
-
-
 
 
 }

@@ -16,7 +16,7 @@ public class ChatMessage {
         this.messageUserId = messageUserId;
     }
 
-    public ChatMessage(){
+    public ChatMessage() {
 
     }
 
@@ -59,7 +59,7 @@ public class ChatMessage {
                 "messageText='" + msg + '\'' +
                 ", messageUser='" + email + '\'' +
                 ", messageUserId='" + messageUserId + '\'' +
-               +
-                '}';
+                +
+                        '}';
     }
 }
