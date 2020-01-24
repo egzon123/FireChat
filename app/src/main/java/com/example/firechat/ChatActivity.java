@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,6 +14,7 @@ import android.view.View;
 
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Scroller;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +46,10 @@ public class ChatActivity extends AppCompatActivity {
 
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
+        input.setScroller(new Scroller(this));
+        input.setMaxLines(2);
+        input.setVerticalScrollBarEnabled(true);
+        input.setMovementMethod(new ScrollingMovementMethod());
         listView = findViewById(R.id.list_chat);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
         showAllOldMessages();

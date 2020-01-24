@@ -28,7 +28,6 @@ import com.squareup.picasso.Picasso;
 
 public class LoginActivity extends AppCompatActivity {
 
-
     static final int GOOGLE_SIGN =123;
     FirebaseAuth firebaseAuth;
     Button btn_login;
@@ -96,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.INVISIBLE);
                         Log.d("TAG","Signin success");
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
                         Intent intent = new Intent(this,ChatRooms.class);
                         intent.putExtra("email",user.getEmail());
 
@@ -106,31 +106,12 @@ public class LoginActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.INVISIBLE);
                         Log.w("TAG","Sigin failure",task.getException());
                         Toast.makeText(this, "SignIn Failed!", Toast.LENGTH_SHORT).show();
-                        updateUI(null,null);
                     }
                 });
     }
 
-    private void updateUI(FirebaseUser user,String displayName) {
-        if(user != null){
-            String email = user.getEmail();
-            String photo = String.valueOf(user.getPhotoUrl());
 
 
-            textView.append("Info : \n");
-            textView.append(displayName+" \n");
-            textView.append(email);
-
-            Picasso.get().load(photo).into(imageView);
-            btn_login.setVisibility(View.INVISIBLE);
 
 
-        }else{
-            textView.setText("FireChat");
-//            Picasso.get().load(R.drawable.ic_block_note).into(imageView);
-            imageView.setImageResource(R.drawable.fire_chat_logo);
-            btn_login.setVisibility(View.VISIBLE);
-
-        }
-    }
 }

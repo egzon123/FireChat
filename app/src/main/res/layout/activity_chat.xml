@@ -16,18 +16,21 @@
         android:tint="@android:color/white"
         app:fabSize="mini" />
 
-    <com.google.android.material.textfield.TextInputLayout
+<!--    <com.google.android.material.textfield.TextInputLayout-->
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/fab">
 
+
         <EditText
             android:id="@+id/input"
+            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/fab"
             android:hint="Input" />
-    </com.google.android.material.textfield.TextInputLayout>
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
 
     <ListView
         android:id="@+id/list_chat"

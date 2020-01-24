@@ -8,6 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/my_message_d">
         <ImageView
             android:id="@+id/avatar"

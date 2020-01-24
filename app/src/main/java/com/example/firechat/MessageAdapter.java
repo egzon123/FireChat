@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
     private ChatActivity chatActivity;
@@ -31,6 +33,8 @@ public class MessageAdapter  extends FirebaseListAdapter<ChatMessage> {
 
         messageUser.setText(model.getEmail());
         messageText.setText(model.getMsg());
+       String imgUrl = FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString();
+        Picasso.get().load(imgUrl).into(imageView);
         // Format the date before showing it
 
         messageTime.setText(DateFormat.format("dd/MM/yyyy (HH:mm)", model.getMessageTime()));
