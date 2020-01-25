@@ -7,17 +7,27 @@ public class ChatMessage {
     private String msg;
     private String messageUserId;
     private long messageTime;
+    private String userName;
 
 
-    public ChatMessage(String msg, String email, String messageUserId) {
+    public ChatMessage(String msg, String email, String messageUserId, String userName) {
         this.email = email;
         this.msg = msg;
         messageTime = new Date().getTime();
         this.messageUserId = messageUserId;
+        this.userName = userName;
     }
 
     public ChatMessage() {
 
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

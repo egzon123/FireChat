@@ -73,6 +73,7 @@ public class ChatActivity extends AppCompatActivity {
         listView = findViewById(R.id.list_chat);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
         showAllOldMessages();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,76 +85,16 @@ public class ChatActivity extends AppCompatActivity {
                             .push()
                             .setValue(new ChatMessage(input.getText().toString(),
                                     nameFromEmail,
-                                    FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    FirebaseAuth.getInstance().getCurrentUser().getUid(), LoginActivity.getAuthUserName())
                             );
                     input.setText("");
                 }
             }
         });
 
-//        btn_send_msg.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                Map<String, Object> map = new HashMap<String, Object>();
-//                temp_key = root.push().getKey();
-//                root.updateChildren(map);
-//
-//                DatabaseReference message_root = root.child(temp_key);
-//                Map<String, Object> map2 = new HashMap<String, Object>();
-//                map2.put("email", nameFromEmail);
-//                map2.put("msg", input_msg.getText().toString());
-//
-//                message_root.updateChildren(map2);
-//            }
-//        });
-
-//        root.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//
-//                append_chat_conversation(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//                append_chat_conversation(dataSnapshot);
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
 
     }
 
-    private String chat_msg, chat_user_name;
-
-//    private void append_chat_conversation(DataSnapshot dataSnapshot) {
-//
-//        Iterator i = dataSnapshot.getChildren().iterator();
-//
-//        while (i.hasNext()) {
-//            chat_user_name = (String) ((DataSnapshot) i.next()).getValue();
-//            chat_msg = (String) ((DataSnapshot) i.next()).getValue();
-//            chat_conversation.append(chat_user_name + " : " + chat_msg + " \n");
-//        }
-//
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

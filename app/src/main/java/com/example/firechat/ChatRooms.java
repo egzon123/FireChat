@@ -68,19 +68,13 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
         room_name.setMaxLines(5);
         room_name.setVerticalScrollBarEnabled(true);
         room_name.setMovementMethod(new ScrollingMovementMethod());
-//        listView = (ListView) findViewById(R.id.listView);
-//
-//        arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list_of_rooms);
-//
-//        listView.setAdapter(arrayAdapter);
-        // set up the RecyclerView
+
         RecyclerView recyclerView = findViewById(R.id.rv_rooms);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         roomAdapter = new RoomAdapter(this, list_of_rooms);
         roomAdapter.setClickListener(this);
         recyclerView.setAdapter(roomAdapter);
 
-        email = getIntent().getExtras().getString("email");
 
         add_room.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,16 +115,6 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
             }
         });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                Intent intent = new Intent(getApplicationContext(),ChatActivity.class);
-//                intent.putExtra("room_name",((TextView)view).getText().toString() );
-//
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -161,30 +145,6 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
         finish();
     }
 
-    //    private void request_user_name() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setTitle("Enter name:");
-//
-//        final EditText input_field = new EditText(this);
-//
-//        builder.setView(input_field);
-//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                name = input_field.getText().toString();
-//            }
-//        });
-//
-//        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//                dialogInterface.cancel();
-//                request_user_name();
-//            }
-//        });
-//
-//        builder.show();
-//    }
     public void hideKeyboard(View view) {
         try {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

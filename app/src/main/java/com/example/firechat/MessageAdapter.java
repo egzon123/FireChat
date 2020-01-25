@@ -37,11 +37,8 @@ public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
         TextView messageText = (TextView) v.findViewById(R.id.message_text);
         ImageView imgProfile = (ImageView) v.findViewById(R.id.avatar);
         TextView messageTime = (TextView) v.findViewById(R.id.message_time);
-        System.out.println("====>> Inside populateView " + model.getMsg() + " === " + model.getEmail());
-
-        messageUser.setText(model.getEmail());
+        messageUser.setText(model.getUserName());
         messageText.setText(model.getMsg());
-
 
         storageReference.child(model.getMessageUserId())
                 .getDownloadUrl()
@@ -56,20 +53,13 @@ public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
 
             }
         });
-//        Glide.with(MyApplication.getInstance())
-//                .load(storageReference.child(model.getMessageUserId()))
-//                .into(imgProfile);
-
-        // Format the date before showing it
-
-
         messageTime.setText(DateFormat.format("dd/MM/yyyy (HH:mm)", model.getMessageTime()));
     }
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ChatMessage chatMessage = getItem(position);
-        System.out.println(chatMessage + " ------>>>>>>>");
+
         if (chatMessage.getMessageUserId().equals(chatActivity.getLoggedInUserName()))
             view = chatActivity.getLayoutInflater().inflate(R.layout.my_message, viewGroup, false);
 
