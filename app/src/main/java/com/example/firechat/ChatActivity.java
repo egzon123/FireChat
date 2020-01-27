@@ -72,6 +72,7 @@ public class ChatActivity extends AppCompatActivity {
         input.setMaxLines(5);
         input.setVerticalScrollBarEnabled(true);
         input.setMovementMethod(new ScrollingMovementMethod());
+
         listView = findViewById(R.id.list_chat);
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
         showAllOldMessages();
