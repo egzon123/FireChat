@@ -1,19 +1,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingVertical="10dp"
     android:paddingLeft="15dp"
     android:paddingRight="60dp"
     android:clipToPadding="false"
-  >
+    android:background="@android:color/white"
+
+    >
 
     <ImageView
         android:id="@+id/avatar"
         android:layout_alignParentLeft="true"
         android:scaleType="centerInside"
-        android:background="@drawable/img"
+        android:background="@drawable/circle"
         android:layout_width="40dp"
         android:layout_height="40dp" />
+
+<!--     <de.hdodenhof.circleimageview.CircleImageView-->
+<!--         android:id="@+id/avatar"-->
+<!--         android:layout_width="40dp"-->
+<!--         android:layout_height="40dp"-->
+<!--         android:layout_alignParentLeft="true"-->
+
+<!--         />-->
+
+
     <TextView
         android:id="@+id/message_user"
         android:layout_marginLeft="15dp"
@@ -43,9 +56,9 @@
         android:id="@+id/message_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/darker_gray"
         android:layout_below="@id/message_text"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="55dp"
         android:textSize="11dp"
         android:elevation="2dp"
         android:text="10:25 PM" />

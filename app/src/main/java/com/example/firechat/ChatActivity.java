@@ -40,6 +40,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
 public class ChatActivity extends AppCompatActivity {
@@ -83,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
                     FirebaseDatabase.getInstance()
                             .getReference().child(room_name)
                             .push()
-                            .setValue(new ChatMessage(input.getText().toString(),
+                            .setValue(new ChatMessage(input.getText().toString().trim(),
                                     nameFromEmail,
                                     FirebaseAuth.getInstance().getCurrentUser().getUid(), LoginActivity.getAuthUserName())
                             );

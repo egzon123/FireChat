@@ -18,7 +18,8 @@
         android:id="@+id/my_relative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="@android:color/transparent">
 
         <TextView
             android:id="@+id/room_last_time"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Jan 20"
+            android:textColor="@android:color/darker_gray"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -46,6 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/room_name"
+            android:textColor="@android:color/darker_gray"
             android:text="Last Message" />
 
     </RelativeLayout>

@@ -19,6 +19,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+import  de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
     private ChatActivity chatActivity;
@@ -35,7 +37,7 @@ public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
     protected void populateView(@NonNull View v, @NonNull ChatMessage model, int position) {
         TextView messageUser = (TextView) v.findViewById(R.id.message_user);
         TextView messageText = (TextView) v.findViewById(R.id.message_text);
-        ImageView imgProfile = (ImageView) v.findViewById(R.id.avatar);
+        CircleImageView imgProfile = (CircleImageView) v.findViewById(R.id.avatar);
         TextView messageTime = (TextView) v.findViewById(R.id.message_time);
         messageUser.setText(model.getUserName());
         messageText.setText(model.getMsg());
@@ -53,7 +55,7 @@ public class MessageAdapter extends FirebaseListAdapter<ChatMessage> {
 
             }
         });
-        messageTime.setText(DateFormat.format("dd/MM/yyyy (HH:mm)", model.getMessageTime()));
+        messageTime.setText(DateFormat.format("dd/MM/yyyy, HH:mm", model.getMessageTime()));
     }
 
     @Override
