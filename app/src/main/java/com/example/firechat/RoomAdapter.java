@@ -23,7 +23,6 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
-    private DatabaseReference root;
 
     public RoomAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
@@ -49,7 +48,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.ViewHolder> {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Long time = (Long) child.child("messageTime").getValue();
                     holder.room_last_msg.setText(child.child("userName").getValue() + " : " + child.child("msg").getValue().toString());
-                    holder.room_last_time.setText(DateFormat.format("dd/MM/yyyy - (HH:mm)", time));
+                    holder.room_last_time.setText(DateFormat.format("dd/MM/yyyy , HH:mm", time));
                 }
             }
 

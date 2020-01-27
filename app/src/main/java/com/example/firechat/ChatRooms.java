@@ -51,10 +51,7 @@ public class ChatRooms extends AppCompatActivity implements RoomAdapter.ItemClic
 
     private Button add_room;
     private EditText room_name;
-    private ListView listView;
-    private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_rooms = new ArrayList<>();
-    private String email;
     private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
     @Override

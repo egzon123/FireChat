@@ -67,6 +67,7 @@ public class ChatActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference().child("profile_images");
         fab = findViewById(R.id.fab);
         input = findViewById(R.id.input);
+
         input.setScroller(new Scroller(this));
         input.setMaxLines(5);
         input.setVerticalScrollBarEnabled(true);
